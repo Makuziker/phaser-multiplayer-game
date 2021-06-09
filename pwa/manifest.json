@@ -1,6 +1,6 @@
 {
-  "short_name": "Phaser Game",
-  "name": "My Cool Phaser 3 Game",
+  "short_name": "Crypto Snakes",
+  "name": "Grow your Snake; Consume other Snakes; Earn Money",
   "icons": [
     {
       "src": "./icons/icons-192.png",

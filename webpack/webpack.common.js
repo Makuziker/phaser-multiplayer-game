@@ -1,13 +1,14 @@
-const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { InjectManifest } = require('workbox-webpack-plugin')
-const webpack = require('webpack')
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: ['./src/scripts/game.ts', './webpack/credits.js'],
+  entry: ['./src/client/scripts/game.ts', './webpack/credits.js'],
+  target: 'web',
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, '..', 'build', 'client'),
     filename: '[name].bundle.js',
     chunkFilename: '[name].chunk.js'
   },
@@ -15,7 +16,11 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js']
   },
   module: {
-    rules: [{ test: /\.tsx?$|\.jsx?$/, include: path.join(__dirname, '../src'), loader: 'ts-loader' }]
+    rules: [{
+      test: /\.tsx?$|\.jsx?$/,
+      include: path.join(__dirname, '..', 'src', 'client'),
+      loader: 'ts-loader'
+    }]
   },
   optimization: {
     splitChunks: {
@@ -31,16 +36,19 @@ module.exports = {
   },
   plugins: [
     new webpack.ProgressPlugin(),
-    new HtmlWebpackPlugin({ gameName: 'Crypto Snakes', template: 'src/index.html' }),
+    new HtmlWebpackPlugin({
+      gameName: 'Multiplayer Snake Game',
+      template: 'src/client/index.html'
+    }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'src/assets', to: 'assets' },
+        { from: 'src/client/assets', to: 'assets' },
         { from: 'pwa', to: '' },
-        { from: 'src/favicon.ico', to: '' }
+        { from: 'src/client/favicon.ico', to: '' }
       ]
     }),
     new InjectManifest({
-      swSrc: path.resolve(__dirname, '../pwa/sw.js'),
+      swSrc: path.resolve(__dirname, '..', 'pwa', 'sw.js'),
       swDest: 'sw.js'
     })
   ]

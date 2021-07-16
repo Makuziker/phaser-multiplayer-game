@@ -15,9 +15,9 @@
   },
   "exclude": [
     "pwa",
-    "dist",
+    "build",
     "node_modules",
-    "typings",
+    "src/typings",
     "webpack"
   ]
 }

@@ -1,48 +1,35 @@
 {
-  "name": "phaser-project-template",
-  "version": "3.53.1",
-  "description": "Phaser 3 starter template with TypeScript and webpack.",
-  "homepage": "https://github.com/yandeu/phaser-project-template#readme",
+  "name": "multiplayer-snake-game",
+  "version": "0.1.0",
+  "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --config webpack/webpack.dev.js",
-    "build": "rimraf dist && webpack --config webpack/webpack.prod.js",
+    "start": "npm-run-all -p client server",
+    "client": "webpack serve --config webpack/webpack.dev.js",
+    "server": "npm-run-all -p server:*",
+    "server:webpack": "webpack --config webpack/webpack.server.js --watch",
+    "server:nodemon": "nodemon build/server/build.js",
+    "build": "rimraf build && webpack --config webpack/webpack.prod.js",
     "bundle": "npm run build",
-    "serve": "serve dist",
-    "format": "prettier --check src/scripts/**",
-    "format:write": "prettier --write src/scripts/**"
-  },
-  "keywords": [
-    "Phaser",
-    "Phaser 3",
-    "Phaser3",
-    "html5 game",
-    "TypeScript",
-    "webpack",
-    "starter"
-  ],
-  "author": {
-    "name": "Yannick Deubel",
-    "url": "https://github.com/yandeu"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yandeu/phaser-project-template.git"
-  },
-  "template": {
-    "name": "phaser-project-template",
-    "url": "https://github.com/yandeu/phaser-project-template",
-    "author": "Yannick Deubel (https://github.com/yandeu)"
+    "serve": "serve build",
+    "format": "prettier --check src/**",
+    "format:write": "prettier --write src/**"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/compression": "^1.7.0",
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.12",
     "@yandeu/prettier-config": "^0.0.1",
     "copy-webpack-plugin": "^8.0.0",
+    "fork-ts-checker-webpack-plugin": "^6.2.12",
     "html-webpack-plugin": "^5.2.0",
     "javascript-obfuscator": "^2.9.5",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "serve": "^12.0.0",
@@ -52,10 +39,19 @@
     "webpack-cli": "^4.3.0",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^5.7.3",
+    "webpack-node-externals": "^3.0.0",
     "webpack-obfuscator": "^3.2.0",
     "workbox-webpack-plugin": "^6.0.2"
   },
   "dependencies": {
+    "@geckos.io/client": "^1.7.2",
+    "@geckos.io/phaser-on-nodejs": "^1.2.4",
+    "@geckos.io/server": "^1.7.2",
+    "@geckos.io/typed-array-buffer-schema": "^1.0.2",
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
     "phaser": "^3.55.2"
   }
 }

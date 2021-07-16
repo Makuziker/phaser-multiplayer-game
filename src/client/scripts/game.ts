@@ -1,9 +1,8 @@
-import 'phaser'
-import MainScene from './scenes/mainScene'
-import PreloadScene from './scenes/preloadScene'
+import 'phaser';
+import { PreloadScene, MenuScene, GameScene } from './scenes';
 
-const DEFAULT_WIDTH = 1280
-const DEFAULT_HEIGHT = 720
+const DEFAULT_WIDTH = 1280;
+const DEFAULT_HEIGHT = 720;
 
 const config = {
   type: Phaser.AUTO,
@@ -15,7 +14,7 @@ const config = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, MainScene],
+  scene: [PreloadScene, MenuScene, GameScene],
   physics: {
     default: 'arcade',
     arcade: {
@@ -26,5 +25,5 @@ const config = {
 }
 
 window.addEventListener('load', () => {
-  const game = new Phaser.Game(config)
-})
+  const game = new Phaser.Game(config);
+});

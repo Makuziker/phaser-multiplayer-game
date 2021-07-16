@@ -1,31 +1,44 @@
 import geckos, { ClientChannel } from '@geckos.io/client';
 import { Scene } from 'phaser';
-import { GAME_SCENE, MENU_SCENE } from "../constants";
+import { GAME_SCENE, MENU_SCENE, ASSETS } from "../constants";
 import { IGameState } from '../../../typings/custom';
-import { initializeClientChannel } from '../channel';
+import { emitPlayerAction, initializeClientChannel } from '../channel';
 
 export class GameScene extends Scene {
   channel: ClientChannel;
   gameState: IGameState;
+  background: Phaser.GameObjects.TileSprite;
 
   constructor() {
     super({ key: GAME_SCENE });
   }
 
-  // init({ channel }: { channel: ClientChannel }) {
-  //   this.channel = channel;
-  // }
-
-  create() {
+  init() {
     this.channel = geckos({ port: 8081 });
     initializeClientChannel(this.channel, this);
-    // this.channel.emit('PLAYER_ACTION', { pointerX: 100, pointerY: 200, isSpeeding: false });
+  }
 
+  create() {
+    this.background = this.add.tileSprite(0, 0, 4000, 4000, ASSETS.TILE_ASSET);
+    this.background.setDepth(-9999);
     this.createExitButton();
+
+    ['pointermove', 'pointerdown', 'pointerup'].forEach(e => {
+      this.input.on(e, (p: Phaser.Input.Pointer) => this.handlePointer(this.channel, p));
+    });
   }
 
   updateGameState(newState: IGameState) {
     this.gameState = { ...newState };
+  }
+
+  // Callback method, using `this.channel` will not point to `GameScene.channel`
+  handlePointer(channel: ClientChannel, pointer: Phaser.Input.Pointer) {
+    emitPlayerAction(channel, {
+      pointerX: pointer.x,
+      pointerY: pointer.y,
+      isSpeeding: pointer.leftButtonDown()
+    });
   }
 
   createExitButton() {

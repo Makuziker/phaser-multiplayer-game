@@ -46,7 +46,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"playerAction\": () => (/* binding */ playerAction)\n/* harmony export */ });\nfunction playerAction(channel, io) {\n    channel.on('PLAYER_ACTION', (data) => {\n    });\n}\n\n\n//# sourceURL=webpack://multiplayer-snake-game/./src/server/channel/playerAction.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"playerAction\": () => (/* binding */ playerAction)\n/* harmony export */ });\nfunction playerAction(channel, io) {\n    channel.on('PLAYER_ACTION', (data) => {\n        console.log(data);\n    });\n}\n\n\n//# sourceURL=webpack://multiplayer-snake-game/./src/server/channel/playerAction.ts?");
 
 /***/ }),
 

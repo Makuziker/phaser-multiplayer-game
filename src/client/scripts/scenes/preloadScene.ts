@@ -1,15 +1,4 @@
-import {
-  PRELOAD_SCENE,
-  MENU_SCENE,
-  // CIRCLE_ASSET,
-  // EYE_BLACK_ASSET,
-  // EYE_WHITE_ASSET,
-  // FOOD_ASSET,
-  // SNAKE_HEAD_ASSET,
-  // TILE_ASSET,
-  // WHITE_SHADOW_ASSET,
-  ASSETS
-} from "../constants";
+import { PRELOAD_SCENE, MENU_SCENE, ASSETS } from "../constants";
 
 export class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -35,7 +24,7 @@ export class PreloadScene extends Phaser.Scene {
       this.game.scene.start(MENU_SCENE);
     });
 
-    const assetsPath = 'assets/img/'; // is this the real path after build?
+    const assetsPath = 'assets/img/';
     for (const name in ASSETS) {
       this.loadAsset(assetsPath, ASSETS[name as keyof typeof ASSETS], 'png'); // type assertion
     }

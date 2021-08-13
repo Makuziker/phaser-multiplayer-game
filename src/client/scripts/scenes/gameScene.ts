@@ -3,6 +3,7 @@ import { Scene } from 'phaser';
 import { GAME_SCENE, MENU_SCENE, ASSETS } from "../constants";
 import { IGameState } from '../../../typings/custom';
 import { emitPlayerAction, initializeClientChannel } from '../channel';
+import { Snake } from '../objects/snake';
 
 export class GameScene extends Scene {
   channel: ClientChannel;
@@ -19,7 +20,7 @@ export class GameScene extends Scene {
   }
 
   create() {
-    this.background = this.add.tileSprite(0, 0, 4000, 4000, ASSETS.TILE_ASSET);
+    this.background = this.add.tileSprite(0, 0, 4000, 4000, ASSETS.TILE);
     this.background.setDepth(-9999);
     this.createExitButton();
 
@@ -28,15 +29,45 @@ export class GameScene extends Scene {
     });
   }
 
+  // update(time: number, delta: number) {
+  //   if (this.gameState.players) {
+  //     const playerIds = Object.keys(this.gameState.players);
+  //     const snakeIds = Object.keys(this.snakes);
+
+  //     // delete snakes for non-existant player IDs
+  //     for (const id of snakeIds) {
+  //       if (!playerIds.includes(id)) {
+  //         this.snakes[id].destroy();
+  //       }
+  //     }
+
+  //     for (const id of playerIds) {
+  //       // spawn new snakes for each new player ID
+  //       if (!this.snakes[id]) {
+  //         this.snakes[id] = new Snake(
+  //           id,
+  //           this.gameState.players[id],
+  //           this,
+  //           ASSETS.CIRCLE
+  //         );
+  //       } else {
+  //         // update the existing snake's position and rotation
+  //         this.snakes[id].update(time, delta);
+  //       }
+  //     }
+  //   }
+  // }
+
   updateGameState(newState: IGameState) {
     this.gameState = { ...newState };
+    console.log(this.gameState);
   }
 
   // Callback method, using `this.channel` will not point to `GameScene.channel`
   handlePointer(channel: ClientChannel, pointer: Phaser.Input.Pointer) {
     emitPlayerAction(channel, {
-      pointerX: pointer.x,
-      pointerY: pointer.y,
+      pointerX: Math.floor(pointer.x),
+      pointerY: Math.floor(pointer.y),
       isSpeeding: pointer.leftButtonDown()
     });
   }

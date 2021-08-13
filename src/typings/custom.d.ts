@@ -21,8 +21,10 @@ export interface IFoodItem {
 }
 
 export interface IGameState {
-  food: Record<string, IFoodItem>
-  players: Record<string, IPlayer>
+  time: number;
+  tick: number;
+  food: IFoodItem[];
+  players: IPlayer[];
 }
 
 export interface IPlayerControls {

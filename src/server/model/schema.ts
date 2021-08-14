@@ -1,4 +1,11 @@
-import { BufferSchema, Model, uint8, uint16, string8, int64, } from '@geckos.io/typed-array-buffer-schema';
+import {
+  BufferSchema,
+  Model,
+  uint8,
+  uint16,
+  string8,
+  int64,
+} from '@geckos.io/typed-array-buffer-schema';
 
 const snakeSectionSchema = BufferSchema.schema('snake_section', {
   x: uint16,
@@ -36,5 +43,4 @@ const playerControlsSchema = BufferSchema.schema('player_action', {
 });
 
 export const gameModel = new Model(gameSchema);
-
 export const playerControlsModel = new Model(playerControlsSchema);

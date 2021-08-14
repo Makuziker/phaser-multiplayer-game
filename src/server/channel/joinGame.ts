@@ -8,8 +8,9 @@ export function joinGame(channel: ServerChannel, io: GeckosServer) {
 
     // @ts-ignore
     spawnNewPlayer(channel.id, data?.name);
-    // const state = getGameState();
-    // const buffer = getBuffer(); need to fix buffer schema (dictionary)
+
+    const buffer = getBuffer();
     // io.emit('ON_GAME_STATE', buffer);
+    io.raw.emit(buffer);
   });
 }

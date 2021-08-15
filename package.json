@@ -23,6 +23,7 @@
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
+    "@types/lodash": "^4.14.172",
     "@yandeu/prettier-config": "^0.0.1",
     "copy-webpack-plugin": "^8.0.0",
     "fork-ts-checker-webpack-plugin": "^6.2.12",
@@ -47,11 +48,11 @@
     "@geckos.io/client": "^1.7.2",
     "@geckos.io/phaser-on-nodejs": "^1.2.4",
     "@geckos.io/server": "^1.7.2",
-    "@geckos.io/typed-array-buffer-schema": "^1.0.2",
     "compression": "^1.7.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
+    "lodash": "^4.17.21",
     "phaser": "^3.55.2"
   }
 }

@@ -1,12 +1,11 @@
 import { ChannelId } from '@geckos.io/server';
 import { IGameState } from "../../typings/custom";
-import { gameModel } from './schema';
 
 const gameState: IGameState = {
-  time: new Date().getTime(),
   tick: 32580,
+  time: new Date().getTime(),
   food: [],
-  players: []
+  players: [],
 }
 
 export function getFood() {
@@ -29,31 +28,38 @@ function playerByIdExists(id: string) {
   return findPlayerIdxById(id) !== -1;
 }
 
+function toFixedNumber(num: number, digits: number, base: number){
+  var pow = Math.pow(base||10, digits);
+  return Math.round(num*pow) / pow;
+}
+
 export function spawnNewPlayer(id: ChannelId, name: string) {
   if (typeof id === 'undefined') throw new Error('channelId is undefined');
   if (playerByIdExists(id)) throw new Error(`Player by id ${id} already exists`);
 
-  const x = Math.random() * 200;
-  const y = Math.random() * 200;
-  const rotation = Math.PI * 1.5; // faces upward in Phaser
+  const x = Math.round(Math.random() * 200);
+  const y = Math.round(Math.random() * 200);
+
+  // faces upward in Phaser, rounded to 4 decimal digits
+  const rotation = toFixedNumber(Math.PI * 1.5, 3, 10);
 
   const newPlayer = {
     id: id,
-    name: name || 'anonymous',
     isAlive: true,
     isSpeeding: false,
+    name: name || 'anonymous',
     snakeSections: [
       {
         isHead: true,
+        rotation,
         x,
-        y,
-        rotation
+        y
       },
       {
         isHead: false,
+        rotation,
         x,
-        y: y + 10,
-        rotation
+        y: y + 10
       }
     ]
   };
@@ -64,12 +70,4 @@ export function spawnNewPlayer(id: ChannelId, name: string) {
 export function removePlayer(id: ChannelId) {
   if (typeof id === 'undefined') throw new Error('channelId is undefined');
   gameState.players = gameState.players.filter(player => player.id !== id);
-}
-
-export function getBuffer() {
-  console.log('Game State to serialize:', gameState);
-  const buffer = gameModel.toBuffer(gameState);
-  console.log('gameState JSON size: ', JSON.stringify(gameState).length);
-  console.log('Buffer size in bytes:', buffer.byteLength);
-  return buffer;
 }

@@ -2,6 +2,7 @@ import geckos, { iceServers } from '@geckos.io/server';
 import { Server } from 'http';
 import { disconnect } from './disconnect';
 import { joinGame } from './joinGame';
+import { playerAction } from './playerAction';
 import { rawMessage } from './rawMessage';
 
 let initialized = false;
@@ -20,7 +21,8 @@ export function initializeServerChannels(server: Server) {
     const listeners = [
       disconnect,
       joinGame,
-      rawMessage
+      rawMessage,
+      playerAction
     ];
 
     listeners.forEach(cb => cb(channel, io));

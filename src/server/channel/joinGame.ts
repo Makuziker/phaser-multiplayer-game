@@ -1,6 +1,6 @@
 import { GeckosServer, ServerChannel } from "@geckos.io/server";
 import { ROOM_ID } from "../constants";
-import { getBuffer, spawnNewPlayer } from "../model";
+import { getGameState, spawnNewPlayer } from "../model";
 
 export function joinGame(channel: ServerChannel, io: GeckosServer) {
   channel.on('JOIN_GAME', data => {
@@ -9,8 +9,7 @@ export function joinGame(channel: ServerChannel, io: GeckosServer) {
     // @ts-ignore
     spawnNewPlayer(channel.id, data?.name);
 
-    const buffer = getBuffer();
-    // io.emit('ON_GAME_STATE', buffer);
-    io.raw.emit(buffer);
+    const gameState = getGameState();
+    io.emit('ON_GAME_STATE', gameState); // todo: send compressed bytes over io.raw.emit
   });
 }

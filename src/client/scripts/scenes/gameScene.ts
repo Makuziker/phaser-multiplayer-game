@@ -1,5 +1,7 @@
 import geckos, { ClientChannel } from '@geckos.io/client';
 import { Scene } from 'phaser';
+import _ from 'lodash';
+
 import { GAME_SCENE, MENU_SCENE, ASSETS } from "../constants";
 import { IGameState } from '../../../typings/custom';
 import { emitPlayerAction, initializeClientChannel } from '../channel';
@@ -59,8 +61,8 @@ export class GameScene extends Scene {
   // }
 
   updateGameState(newState: IGameState) {
-    this.gameState = { ...newState };
-    console.log(this.gameState);
+    this.gameState = _.cloneDeep(newState);
+    console.log('Current Game State:', JSON.stringify(this.gameState, undefined, 2));
   }
 
   // Callback method, using `this.channel` will not point to `GameScene.channel`
